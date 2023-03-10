@@ -1,0 +1,37 @@
+version: '3.8'
+services:
+  wms:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: wms
+    restart: always
+    ports:
+      - '80:80'
+    env_file:
+      - .env
+    environment:
+      # App
+      PORT: ${PORT}
+
+      # JWT
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN}
+      JWT_REFRESH_EXPIRES_IN: ${JWT_REFRESH_EXPIRES_IN}
+      API_TOKEN: ${API_TOKEN}
+
+      # Redis
+      REDIS_HOST: ${REDIS_HOST}
+      REDIS_PORT: ${REDIS_PORT}
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      REDIS_URI: ${REDIS_URI}
+
+      # Database
+      DB_CONNECTION_STRING: ${DB_CONNECTION_STRING}
+
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

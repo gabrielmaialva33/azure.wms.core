@@ -1,0 +1,281 @@
+openapi: 3.0.3
+info:
+  version: 1.0.0
+  title: Azure Wms Api
+  description: 'This is documentation for Azure Wms Api'
+  contact:
+    name: Gabriel Maia
+    email: gabrielmaialva33@gmail.com
+    url: github.com/gabrielmaialva33
+servers:
+  - url: http://127.0.0.1:80
+    description: Local server
+  - url: http://127.0.0.1:3000
+    description: Docker server
+
+tags:
+  - name: Tenants
+    description: Tenant management
+  - name: Inventory
+    description: Inventory management
+
+paths:
+  /api/wms/tenancies:
+    get:
+      tags:
+        - Tenants
+      summary: Get all tenants
+      description: Get all tenants
+      operationId: getTenants
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tenant'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/wms/tenancies/{id}:
+    get:
+      tags:
+        - Tenants
+      summary: Get tenant by id
+      description: Get tenant by id
+      operationId: getTenantById
+      parameters:
+        - name: id
+          in: path
+          description: Tenant id
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tenant'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/wms/inventory/{client_id}/{id}:
+    get:
+      tags:
+        - Inventory
+      summary: Get all inventory by client id
+      description: Get all inventory by client id
+      operationId: getInventoryByClientId
+      parameters:
+        - name: client_id
+          in: path
+          description: Client id
+          required: true
+          schema:
+            type: number
+            example: 1
+        - name: id
+          in: path
+          description: Inventory id
+          required: true
+          schema:
+            type: number
+            example: 1
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Inventory'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/wms/inventory/{client_id}/get/{id}:
+    get:
+      tags:
+        - Inventory
+      summary: Get inventory by id
+      description: Get inventory by id
+      operationId: getInventoryById
+      parameters:
+        - name: client_id
+          in: path
+          description: Client id
+          required: true
+          schema:
+            type: number
+            example: 1
+        - name: id
+          in: path
+          description: Inventory id
+          required: true
+          schema:
+            type: number
+            example: 1
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Inventory'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  schemas:
+    Tenant:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        name:
+          type: string
+          example: Tenant 1
+        description:
+          type: string
+          example: Tenant 1 description
+        createdAt:
+          type: string
+          example: 2021-01-01T00:00:00.000Z
+        updatedAt:
+          type: string
+          example: 2021-01-01T00:00:00.000Z
+      example:
+        id: 1
+        name: Tenant 1
+        description: Tenant 1 description
+        createdAt: 2021-01-01T00:00:00.000Z
+        updatedAt: 2021-01-01T00:00:00.000Z
+    Inventory:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        name:
+          type: string
+          example: Inventory 1
+        description:
+          type: string
+          example: Inventory 1 description
+        createdAt:
+          type: string
+          example: 2021-01-01T00:00:00.000Z
+        updatedAt:
+          type: string
+          example: 2021-01-01T00:00:00.000Z
+      example:
+        id: 1
+        name: Inventory 1
+        description: Inventory 1 description
+        createdAt: 2021-01-01T00:00:00.000Z
+        updatedAt: 2021-01-01T00:00:00.000Z
+
+    Error:
+      description: The error schema
+      type: object
+      properties:
+        statusCode:
+          type: number
+          example: 404
+        message:
+          type: string
+          example: Cannot GET /
+        error:
+          type: string
+          example: Not Found
